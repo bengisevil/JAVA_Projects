@@ -1,0 +1,61 @@
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
+// -- Bengi Sevil (bsevil18)
+package towersofhanoi;
+
+import student.TestCase;
+
+/**
+ * The HanoiSolverTest class tests all the methods in the class HanoiSolver
+ * for accurate behavior.
+ * 
+ * @author Bengi Sevil
+ * @version 06.14.2018
+ */
+public class HanoiSolverTest extends TestCase {
+    HanoiSolver test;
+
+
+    /**
+     * Initializes a new object of type HanoiSolver named
+     * test with 5 as the number of discs.
+     */
+    public void setUp() {
+        test = new HanoiSolver(5);
+        for (int i = 0; i < 5; i++) {
+            Disc disc = new Disc(5);
+            test.getTower(Position.LEFT).push(disc);
+        }
+    }
+
+
+    /**
+     * Tests discs method for accurate behavior.
+     */
+    public void testDiscs() {
+        assertEquals(5, test.discs());
+    }
+
+
+    /**
+     * Tests getTower for accurate behavior.
+     */
+    public void testGetTower() {
+        Tower left = new Tower(Position.LEFT);
+        assertTrue(left.position().equals(test.getTower(Position.LEFT)
+            .position()));
+    }
+
+
+    /**
+     * Tests toString method for accurate results.
+     */
+    public void testToString() {
+        // Empty towers
+        assertEquals("[][][]", test.toString());
+    }
+
+}

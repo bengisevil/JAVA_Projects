@@ -1,0 +1,152 @@
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
+// -- Bengi Sevil (bsevil18)
+package towersofhanoi;
+
+import stack.StackInterface;
+import student.TestCase;
+
+/**
+ * LinkedStackTest tests the methods defined in the LinkedStack
+ * class for accuracy.
+ * 
+ * @author Bengi Sevil
+ * @version 06.14.2018
+ */
+
+public class LinkedStackTest extends TestCase {
+    private LinkedStack<String> test;
+
+
+    /**
+     * setUp initializes the private variable test
+     * and leaves it as an empty stack.
+     */
+    public void setUp() {
+        test = new LinkedStack<String>();
+    }
+
+
+    /**
+     * Tests the size method for accurate behavior.
+     */
+    public void testSize() {
+        assertEquals(0, test.size());
+        test.push("a");
+        assertEquals(1, test.size());
+        for (int i = 0; i < 20; i++) {
+            test.push("test");
+        }
+        assertEquals(21, test.size());
+    }
+
+
+    /**
+     * Tests the push method for accurate behavior.
+     */
+    public void testPush() {
+        test.push("yay");
+        test.push("nay");
+        assertEquals(2, test.size());
+    }
+
+
+    /**
+     * Tests pop() for accurate behavior.
+     */
+    public void testPop() {
+        Exception exception = null;
+        try {
+            test.pop();
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+
+        test.push("a");
+        assertEquals(1, test.size());
+        assertEquals("a", test.pop());
+        assertEquals(0, test.size());
+
+        for (int i = 0; i < 20; i++) {
+            test.push("test");
+        }
+
+        assertEquals(20, test.size());
+        assertEquals("test", test.pop());
+        assertEquals("test", test.pop());
+        assertEquals("test", test.pop());
+        assertEquals("test", test.pop());
+        assertEquals(16, test.size());
+    }
+
+
+    /**
+     * Tests the peek method for accurate results.
+     */
+    public void testPeek() {
+        Exception exception = null;
+        try {
+            test.peek();
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+
+        test.push("a");
+        assertEquals("a", test.peek());
+
+        test.push("ab");
+        assertEquals("ab", test.peek());
+
+    }
+
+
+    /**
+     * Tests clear for accurate behavior.
+     */
+    public void testClear() {
+        assertEquals(0, test.size());
+        test.clear();
+        assertEquals(0, test.size());
+        test.push("a");
+        assertEquals(1, test.size());
+        test.clear();
+        assertEquals(0, test.size());
+        test.push("a");
+        test.push("b");
+        assertEquals(2, test.size());
+        test.clear();
+        assertEquals(0, test.size());
+    }
+
+
+    /**
+     * Tests isEmpty for accurate behavior.
+     */
+    public void testIsEmpty() {
+        assertTrue(test.isEmpty());
+        test.push("a");
+        assertFalse(test.isEmpty());
+    }
+
+
+    /**
+     * Tests toString for accurate results.
+     */
+    public void testToString() {
+        assertEquals("[]", test.toString());
+        test.push("a");
+        test.push("b");
+        test.push("c");
+        test.push("d");
+        test.push("e");
+
+        assertEquals("[e, d, c, b, a]", test.toString());
+    }
+}

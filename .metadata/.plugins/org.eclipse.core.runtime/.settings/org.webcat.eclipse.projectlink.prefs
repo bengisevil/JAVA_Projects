@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+org.webcat.eclipse.projectlink.preferences.data_notification_shown=true
+org.webcat.eclipse.projectlink.preferences.downloadURL=http\://courses.cs.vt.edu/~cs2114/assignments.xml
+org.webcat.eclipse.projectlink.preferences.downloaded_projects=\#Wed May 30 16\:19\:50 EDT 2018\r\nhttp\\\://courses.cs.vt.edu/~cs2114/Spring2016/CarranoDataStructures.zip\=CarranoDataStructuresLib\r\nhttp\\\://courses.cs.vt.edu/~cs2114/Spring2016/ExFirstWindow.zip\=ExFirstWindow\r\nhttp\\\://courses.cs.vt.edu/~cs2114/Spring2016/GraphWindow.zip\=GraphWindowLib\r\nhttp\\\://courses.cs.vt.edu/~cs2114/Spring2016/Lab01Introduction2016S.zip\=Lab 01 Introduction\r\nhttp\\\://courses.cs.vt.edu/~cs2114/Spring2016/ExClassHokie.zip\=ExClassHokie\r\nhttp\\\://courses.cs.vt.edu/~cs2114/Spring2016/CS2114-Support.zip\=CS2114-Support\r\n
+org.webcat.eclipse.projectlink.preferences.submitURL=https\://web-cat.cs.vt.edu/Web-CAT/WebObjects/Web-CAT.woa/wa/assignments/eclipse?institution\=VT
+org.webcat.eclipse.projectlink.preferences.urlType=separate
+org.webcat.eclipse.projectlink.preferences.username=bsevil18

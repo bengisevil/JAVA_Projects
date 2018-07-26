@@ -1,0 +1,218 @@
+
+package memman;
+
+import student.TestCase;
+
+/**
+ * This class tests the functionality of the methods in the class
+ * DLList.
+ * 
+ * @author Bengi Sevil
+ * @version 7/12/208
+ *
+ */
+public class DLListTest extends TestCase {
+    /**
+     * the list we will use
+     */
+    private DLList freeBlockList;
+
+
+    /**
+     * run before every test case
+     */
+    @Override
+    public void setUp() {
+        freeBlockList = new DLList(10);
+    }
+
+
+    /**
+     * Tests getSize for accurate results.
+     */
+    public void testGetSize() {
+        assertEquals(0, freeBlockList.getSize());
+        freeBlockList.add(0, 4);
+        assertEquals(1, freeBlockList.getSize());
+    }
+
+
+    /**
+     * Tests isEmpty method for accurate results.
+     */
+    public void testIsEmpty() {
+        assertTrue(freeBlockList.isEmpty());
+        freeBlockList.add(10, 4);
+        assertFalse(freeBlockList.isEmpty());
+    }
+
+
+    /**
+     * Tests clear method for accurate results.
+     */
+    public void testClear() {
+        freeBlockList.clear();
+        assertTrue(freeBlockList.isEmpty());
+        freeBlockList.add(10, 4);
+        freeBlockList.add(2, 3);
+        assertFalse(freeBlockList.isEmpty());
+        freeBlockList.clear();
+        assertTrue(freeBlockList.isEmpty());
+
+    }
+
+
+    /**
+     * Tests the add method for accurate results.
+     */
+    public void testAdd() {
+        // add to empty list
+        assertEquals("[{0, 10}]", freeBlockList.toString());
+        freeBlockList.add(0, 2);
+        assertEquals("[{0, 2}]", freeBlockList.toString());
+
+        // Add to list with 1 item
+        freeBlockList.add(7, 2);
+        assertEquals("[{0, 2}, {7, 2}]", freeBlockList.toString());
+
+        // Add to list with multiple items
+        freeBlockList.add(5, 1);
+        assertEquals("[{0, 2}, {5, 1}, {7, 2}]", freeBlockList.toString());
+
+        // Ensure merge happens when needed
+        freeBlockList.add(2, 1);
+        assertEquals("[{0, 3}, {5, 1}, {7, 2}]", freeBlockList.toString());
+
+        // Add to the end
+        freeBlockList.add(20, 4);
+        assertEquals("[{0, 3}, {5, 1}, {7, 2}, {20, 4}]", freeBlockList
+            .toString());
+
+        // Try merging again
+        freeBlockList.add(6, 10);
+        assertEquals("[{0, 3}, {5, 25}]", freeBlockList.toString());
+        freeBlockList.add(18, 10);
+        assertEquals("[{0, 3}, {5, 30}]", freeBlockList.toString());
+        freeBlockList.add(20, 40);
+        assertEquals("[{0, 3}, {5, 60}]", freeBlockList.toString());
+
+        freeBlockList.add(3, 4);
+        assertEquals("[{0, 60}]", freeBlockList.toString());
+
+    }
+
+
+    /**
+     * Tests remove for accurate results.
+     */
+    public void testRemove() {
+        Exception exception = null;
+        try {
+            freeBlockList.remove(2, 3);
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+
+        freeBlockList.add(0, 2);
+        freeBlockList.add(20, 4);
+        freeBlockList.add(7, 2);
+        freeBlockList.add(5, 1);
+        freeBlockList.add(2, 1);
+        freeBlockList.add(20, 4);
+        assertEquals("[{0, 3}, {5, 1}, {7, 2}, {20, 4}]", freeBlockList
+            .toString());
+
+        // Remove regular node
+        Node test = new Node(0, 3);
+        assertTrue(freeBlockList.remove(0, 3).equals(test));
+        assertEquals("[{5, 1}, {7, 2}, {20, 4}]", freeBlockList.toString());
+
+        test = new Node(20, 2);
+        assertEquals(test, freeBlockList.remove(22, 2));
+        assertEquals("[{5, 1}, {7, 2}, {20, 2}]", freeBlockList.toString());
+
+        test = new Node(8, 1);
+        assertEquals(test, freeBlockList.remove(7, 1));
+        assertEquals("[{5, 1}, {8, 1}, {20, 2}]", freeBlockList.toString());
+
+        test = new Node(21, 1);
+        assertEquals(test, freeBlockList.remove(20, 1));
+        assertEquals("[{5, 1}, {8, 1}, {21, 1}]", freeBlockList.toString());
+
+        test = null;
+        assertEquals(test, freeBlockList.remove(40, 2));
+
+        test = null;
+        assertEquals(test, freeBlockList.remove(2, 3));
+    }
+
+
+    /**
+     * Tests getNode for accurate results.
+     */
+    public void testGetNode() {
+        Exception exception = null;
+        try {
+            freeBlockList.getNode(0);
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+
+        try {
+            freeBlockList.getNode(-5);
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+
+        try {
+            freeBlockList.getNode(20);
+        }
+        catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+
+        Node temp = new Node(3, 4);
+        freeBlockList.add(3, 4);
+        assertEquals(temp, freeBlockList.getNode(0));
+    }
+
+
+    /**
+     * Tests getNodeByPosition for accurate results.
+     */
+    public void testGetNodeByPosition() {
+        Node temp = null;
+        assertEquals(temp, freeBlockList.getNodeByPosition(5));
+        temp = new Node(3, 4);
+        freeBlockList.add(3, 4);
+        assertEquals(temp, freeBlockList.getNodeByPosition(3));
+
+    }
+
+
+    /**
+     * Tests getPositionByFirstFit for accurate results.
+     */
+    public void testGetPositionByFirstFit() {
+        // Search cases
+        freeBlockList.add(0, 2);
+        freeBlockList.add(7, 2);
+        freeBlockList.add(5, 1);
+        freeBlockList.add(11, 4);
+        freeBlockList.add(2, 1);
+        freeBlockList.add(20, 4);
+        assertEquals(0, freeBlockList.getPositionByFirstFit(0, 1));
+        assertEquals(0, freeBlockList.getPositionByFirstFit(0, 2));
+        assertEquals(11, freeBlockList.getPositionByFirstFit(3, 4));
+        freeBlockList.remove(11, 4);
+        assertEquals(-1, freeBlockList.getPositionByFirstFit(3, 4));
+
+    }
+}

@@ -1,0 +1,77 @@
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
+// -- Bengi Sevil (bsevil18)
+package towersofhanoi;
+
+import CS2114.Window;
+import java.util.Observable;
+import java.util.Observer;
+import CS2114.Shape;
+
+public class GameWindow implements Observer {
+    private Window window;
+    private Shape left;
+    private Shape right;
+    private HanoiSolver game;
+    private static final int DISC_GAP = 10;
+    public static final int DISC_HEIGHT = 5;
+
+
+    /**
+     * 
+     * @param game
+     */
+    public GameWindow(HanoiSolver game) {
+
+    }
+
+
+    /**
+     * @param
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    /**
+     * 
+     * @param solve
+     */
+    public void clickedSolve(Button button) {
+        button.disable();
+        new Thread() {
+            public void run() {
+                game.solve();
+            }
+        }
+    }
+
+
+    /**
+     * 
+     */
+    private void sleep() {
+        try {
+            Thread.sleep(500);
+
+        }
+        catch (Exception e) {
+
+        }
+    }
+
+
+    /**
+     * 
+     * @param pos
+     */
+    private void moveDisc(Position pos) {
+
+    }
+}

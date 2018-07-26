@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Stack"/>
+    <fullyQualifiedTypeName name="bag.BagInterface"/>
+    <fullyQualifiedTypeName name="bag.Bag"/>
+    <fullyQualifiedTypeName name="bag.SimpleBagInterface"/>
+    <fullyQualifiedTypeName name="bag.Node"/>
+    <fullyQualifiedTypeName name="java.util.stream.IntStream"/>
+    <fullyQualifiedTypeName name="game.WhackAShape"/>
+    <fullyQualifiedTypeName name="java.lang.Math"/>
+    <fullyQualifiedTypeName name="CS2114.WindowSide"/>
+    <fullyQualifiedTypeName name="java.util.NoSuchElementException"/>
+    <fullyQualifiedTypeName name="queue.QueueInterface"/>
+    <fullyQualifiedTypeName name="queue.EmptyQueueException"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.text.ParseException"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="java.io.File"/>
+    <fullyQualifiedTypeName name="CS2114.Window"/>
+    <fullyQualifiedTypeName name="CS2114.Button"/>
+    <fullyQualifiedTypeName name="list.AList"/>
+    <fullyQualifiedTypeName name="CS2114.CircleShape"/>
+    <fullyQualifiedTypeName name="CS2114.SquareShape"/>
+    <fullyQualifiedTypeName name="CS2114.TextShape"/>
+    <fullyQualifiedTypeName name="java.util.Iterator"/>
+    <fullyQualifiedTypeName name="acm.util.RandomGenerator"/>
+    <fullyQualifiedTypeName name="student.TestableRandom"/>
+    <fullyQualifiedTypeName name="spacecolonies.ColonyCalculator"/>
+    <fullyQualifiedTypeName name="com.sun.javafx.geom.Shape"/>
+    <fullyQualifiedTypeName name="CS2114.Shape"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="memman.doublyLinkedList.Node"/>
+    <fullyQualifiedTypeName name="student.TestCase"/>
+</qualifiedTypeNameHistroy>

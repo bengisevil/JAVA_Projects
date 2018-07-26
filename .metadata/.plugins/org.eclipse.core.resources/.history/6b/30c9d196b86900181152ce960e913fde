@@ -1,0 +1,35 @@
+package game;
+
+import bag.Bag;
+import bag.BagInterface;
+import CS2114.Window;
+import student.TestableRandom;
+
+/**
+ * WhackAShape ...***FILL IN
+ *
+ * @author Bengi Sevil bsevil18
+ * @version 06.06.2018
+ * 
+ */
+public class WhackAShape {
+    private Window window;
+    private TestableRandom randomGenerator;
+    
+    /**
+     * WhackAShape default constructor. Creates a new
+     * object of this type and initializes private fields.
+     */
+    public WhackAShape() {
+        window = new Window();
+        randomGenerator = new TestableRandom();
+    }
+    
+    /**
+     * Parameterized Constructor of the WhackAShape class.
+     */
+    public WhackAShape(String[] str) {
+        
+    }
+
+}

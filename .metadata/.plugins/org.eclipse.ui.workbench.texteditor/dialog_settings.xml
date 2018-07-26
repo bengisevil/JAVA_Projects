@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="expan/**"/>
+			<item value="byt"/>
+			<item value="decrement"/>
+			<item value="enqueue("/>
+			<item value="isfull"/>
+			<item value="capaci"/>
+			<item value="MINIMUM"/>
+			<item value="isempty"/>
+		</list>
+		<list key="replacehistory">
+			<item value="&quot;&quot;"/>
+			<item value="memman"/>
+			<item value="planetShapeSize"/>
+			<item value="offsetSkill_Y"/>
+			<item value="skills"/>
+			<item value="planets[i+1]"/>
+			<item value="fillShape"/>
+			<item value="String"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="327" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-30|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="436" key="DIALOG_HEIGHT"/>
+		<item value="244" key="DIALOG_X_ORIGIN"/>
+		<item value="138" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

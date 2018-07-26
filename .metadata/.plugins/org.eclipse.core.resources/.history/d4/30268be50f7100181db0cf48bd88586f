@@ -1,0 +1,101 @@
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
+// -- Bengi Sevil (bsevil18)
+package towersofhanoi;
+
+import student.TestCase;
+
+/**
+ * The HanoiSolverTest class tests all the methods in the class HanoiSolver
+ * for accurate behavior.
+ * 
+ * @author Bengi Sevil
+ * @version 06.14.2018
+ */
+public class HanoiSolverTest extends TestCase {
+    private HanoiSolver test;
+    private HanoiSolver empty;
+
+
+    /**
+     * Initializes a new object of type HanoiSolver named
+     * test with 5 as the number of discs, and an empty one
+     * named empty.
+     */
+    public void setUp() {
+        test = new HanoiSolver(5);
+        empty = new HanoiSolver(10);
+        for (int i = 0; i < 5; i++) {
+            Disc disc = new Disc(5);
+            test.getTower(Position.LEFT).push(disc);
+        }
+    }
+
+
+    /**
+     * Tests discs method for accurate behavior.
+     */
+    public void testDiscs() {
+        assertEquals(5, test.discs());
+    }
+
+
+    /**
+     * Tests getTower for accurate behavior.
+     */
+    public void testGetTower() {
+        Tower left = new Tower(Position.LEFT);
+        assertTrue(left.position().equals(test.getTower(Position.LEFT)
+            .position()));
+    }
+
+
+    /**
+     * Tests toString method for accurate results.
+     */
+    public void testToString() {
+        // Empty towers
+        assertEquals("[][][]", empty.toString());
+
+        // All 3 towers with 1 disc
+        Disc temp = new Disc(2);
+        empty.getTower(Position.LEFT).push(temp);
+        empty.getTower(Position.MIDDLE).push(temp);
+        empty.getTower(Position.RIGHT).push(temp);
+
+        assertEquals("[2][2][2]", empty.toString());
+
+        empty.getTower(Position.LEFT).clear();
+        empty.getTower(Position.MIDDLE).clear();
+        empty.getTower(Position.RIGHT).clear();
+
+        // All three towers with multiple disc
+        for (int i = 0; i < 5; i++) {
+            Disc disc = new Disc(5);
+            empty.getTower(Position.LEFT).push(disc);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            Disc disc = new Disc(10);
+            empty.getTower(Position.MIDDLE).push(disc);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Disc disc = new Disc(15);
+            empty.getTower(Position.RIGHT).push(disc);
+        }
+
+        assertEquals("[5, 5, 5, 5, 5][10, 10, 10, 10][15, 15, 15]", empty
+            .toString());
+
+        // First tower non-empty, right and middle empty.
+        empty.getTower(Position.MIDDLE).clear();
+        empty.getTower(Position.RIGHT).clear();
+
+        assertEquals("[5, 5, 5, 5, 5][][]", empty.toString());
+    }
+
+}

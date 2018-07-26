@@ -1,0 +1,209 @@
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
+// -- Bengi Sevil (bsevil18)
+package towerofhanoi;
+
+import stack.StackInterface;
+import java.util.EmptyStackException;
+
+/**
+ * Linked implementation of the stack data structure. Used to
+ * store the discs on a FIFO principle on the towers for the
+ * game. Implements the StackInterface.
+ * 
+ * @param <T>
+ *            The type of the LinkedStack.
+ * @author Bengi Sevil
+ * @version 06.12.2018
+ */
+public class LinkedStack<T> implements StackInterface<T> {
+
+    private Node<T> topNode;
+    private int size;
+
+
+    /**
+     * Default constructor of the linked implementation of
+     * stack. Creates a new object of type LinkedStack<T>.
+     * Initializes private fields topNode to null and size
+     * to 0.
+     */
+    public LinkedStack() {
+        topNode = null;
+        size = 0;
+    }
+
+
+    /**
+     * Returns the size of the linked stack.
+     * 
+     * @return size
+     */
+    public int size() {
+        return size;
+    }
+
+
+    /**
+     * Returns a string representation of the list If a list contains A, B, and
+     * C, the following should be returned: [lastPush, secondPush, firstPush]
+     * If the stack is empty, [] is returned.
+     * 
+     * @return a string representing the list
+     */
+    public String toString() {
+        String result = "[";
+
+        Node<T> current = topNode;
+        while (current != null) {
+            result += "" + current.data;
+            current = current.next;
+            if (current != null) {
+                result += ", ";
+            }
+        }
+        result += "]";
+        return result;
+    }
+
+
+    /**
+     * Clears out the stack by setting topNode to null
+     * and setting the size to 0.
+     */
+    @Override
+    public void clear() {
+        topNode = null;
+        size = 0;
+    }
+
+
+    /**
+     * Checks if the stack is empty.
+     * 
+     * @return {@code true} if size is 0.
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+
+
+    /**
+     * Returns the data field of the top element in the
+     * stack if the stack is not empty, without modifying it..
+     * 
+     * @throws EmptyStackException
+     *             if the stack is empty.
+     * 
+     * @return data field of the top element.
+     */
+    @Override
+    public T peek() throws EmptyStackException {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return topNode.getData();
+    }
+
+
+    /**
+     * Removes the top element of the stack if the stack
+     * is not empty. Returns the data field of the popped
+     * element.
+     * 
+     * @throws EmptyStackException
+     *             if the stack is empty.
+     * 
+     * @return data field of the popped elment.
+     */
+    @Override
+    public T pop() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        Node<T> temp = topNode;
+        topNode = topNode.getNextNode();
+        size--;
+        return temp.data;
+    }
+
+
+    /**
+     * Adds anEntry to the top of the stack.
+     * 
+     * @param anEntry
+     *            The new entry to be added.
+     */
+    @Override
+    public void push(T anEntry) {
+        if (isEmpty()) {
+            Node<T> newHead = new Node<T>(anEntry);
+            topNode = newHead;
+        }
+        else {
+            Node<T> temp = new Node<T>(anEntry);
+            temp.setNextNode(topNode);
+            topNode = temp;
+        }
+        size++;
+    }
+
+
+    /**
+     * The private node class for the LinkedStack class.
+     * 
+     * @param <T>
+     */
+    private class Node<T> {
+        private Node<T> next;
+        private T data;
+
+
+        /**
+         * Default constructor for the Node class. Initializes
+         * next to null and data to newData;
+         */
+        public Node(T newData) {
+            next = null;
+            data = newData;
+        }
+
+
+        /**
+         * Returns the next node.
+         * 
+         * @return next node
+         */
+        public Node<T> getNextNode() {
+            return next;
+        }
+
+
+        /**
+         * Returns the data field.
+         * 
+         * @return data
+         */
+        public T getData() {
+            return data;
+        }
+
+
+        /**
+         * Sets the next node to newNode.
+         * 
+         * @param newNode
+         *            The new next node.
+         */
+        public void setNextNode(Node<T> newNode) {
+            next = newNode;
+        }
+
+    }
+
+}

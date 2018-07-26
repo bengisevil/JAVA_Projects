@@ -1,0 +1,102 @@
+package memman;
+
+/**
+ * This class represents the memory pool in the Memory
+ * Manager project.
+ * 
+ * @author Bengi Sevil
+ * @version 07.12.2018
+ * @param <T>
+ *            Type template.
+ */
+public class MemoryPool<T> {
+    private Byte[] memPool;
+    private int size;
+    private int curIndex;
+    private DLList freeBlockList;
+
+
+    /**
+     * Creates a new MemoryPool object with length initialSize. Initializes all
+     * private fields, including a freeBlockList with an initial node of
+     * position
+     * 0 and size initialSize.
+     * 
+     * @param initialSize
+     *            Initial size of the memPool.
+     */
+    @SuppressWarnings("unchecked")
+    public MemoryPool(int initialSize) {
+        size = initialSize;
+        memPool = new Byte[initialSize];
+        curIndex = 0;
+        freeBlockList = new DLList(initialSize);
+    }
+
+
+    /**
+     * Checks if the memory pool by comparing front and back index.
+     * 
+     * @return {@code true} if memPool is full.
+     *         {@code false} otherwise.
+     */
+    public boolean isFull() {
+        return (memPool.length == (size - 1));
+    }
+
+
+    /**
+     * Retrieves one or more blocks from the memPool based on the
+     * number stored and the index given. The number stored in index
+     * indicates how many blocks after the current index represents the
+     * desired data.
+     * Updates the freeBlockList as new free space is available.
+     * 
+     * @param index
+     *            The index of the item requested.
+     * @return Byte array representation of the item requested.
+     * 
+     * @throws IndexOutOfBoundsException
+     *             when index is negative or
+     *             greater than size
+     */
+    public Byte[] retrieve(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        int numOfBlocksAfter = memPool[index];
+        Byte[] result = new Byte[numOfBlocksAfter];
+        for (int i = 1; i < numOfBlocksAfter; i++) {
+            result[i] = memPool[i];
+        }
+        // Update freeBlockList
+        freeBlockList.add(index, numOfBlocksAfter + 1);
+        return result;
+    }
+
+
+    /**
+     * This method stores the byte array representation of a new item in the
+     * memory pool in the first available free block if there is enough space to
+     * store
+     * the item array + 1 to store its size.
+     * 
+     * @param item
+     *            New item to be inserted into the memory pool.
+     * @throws IllegalArgumentException
+     *             if item is of length 0.
+     */
+    public int insert(Byte[] item) {
+        int newPos = freeBlockList.getPositionByFirstFit(curIndex, item.length);
+        if (newPos != -1) {
+            freeBlockList.remove(newPos, item.length + 1);
+            memPool[newPos] = (byte)item.length;
+            for (int i = 0; i < item.length; i++) {
+                newPos++;
+                memPool[newPos] = item[i];
+            }
+        }
+        return newPos;
+    }
+
+}

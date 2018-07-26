@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item value="true" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value=""/>
+			<item value="C:\Users\Bengi Sevil\Downloads\"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="C:\Users\Bengi Sevil\Downloads\Project1Starter (1).zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Project1Starter.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab14BSTSkeleton (1).zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab13TreeIntro.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab10DLListSkeleton.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab06ArrayBasedStackSkeleton.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab05IceCreamStackSkeleton.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab04GroceryBagSkeleton.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab03MovieCollectionsSkeleton-1.zip"/>
+			<item value="C:\Users\Bengi Sevil\Downloads\Lab02EmployeePolymorphism.zip"/>
+		</list>
+	</section>
+	<section name="NewWizardAction">
+		<item value="org.eclipse.jdt.ui.wizards.JavaProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.jdt.ui.java"/>
+		</list>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item value="700" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-30|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="635" key="DIALOG_HEIGHT"/>
+		<item value="458" key="DIALOG_X_ORIGIN"/>
+		<item value="10" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

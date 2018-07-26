@@ -1,0 +1,14 @@
+package game;
+import bag.Bag;
+import bag.BagInterface;
+import CS2114.Window;
+/**
+ * WhackAShape ...***FILL IN
+ *
+ * @author Bengi Sevil bsevil18
+ * @version 06.06.2018
+ * 
+ */
+public class WhackAShape {
+    private Window window;
+}

@@ -1,0 +1,43 @@
+package game;
+import bag.SimpleBagInterface;
+import student.TestableRandom;
+/**
+ * SimpleArrayBag ...***FILL IN
+ *
+ * @author Bengi Sevil bsevil18
+ * @version 06.06.2018
+ * 
+ */
+public class SimpleArrayBag<T> implements SimpleBagInterface {
+
+    @Override
+    public boolean add(Object arg0) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public int getCurrentSize() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public Object pick() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean remove(Object arg0) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+}

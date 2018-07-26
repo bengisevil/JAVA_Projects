@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;memman.doublyLinkedList&apos; to &apos;DLList&apos;&#x0D;&#x0A;- Original project: &apos;Project 1&apos;&#x0D;&#x0A;- Original element: &apos;memman.doublyLinkedList&apos;&#x0D;&#x0A;- Renamed element: &apos;memman.DLList&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;doublyLinkedList&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;memman{doublyLinkedList.java[doublyLinkedList" matchStrategy="1" name="DLList" qualified="false" references="true" similarDeclarations="false" stamp="1530849480977" textual="false" version="1.0"/>
+</session>

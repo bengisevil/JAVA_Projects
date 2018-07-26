@@ -1,0 +1,11 @@
+package game;
+/**
+ * SimpleArrayBag ...***FILL IN
+ *
+ * @author Bengi Sevil bsevil18
+ * @version 06.06.2018
+ * 
+ */
+public class SimpleArrayBag<T> {
+
+}

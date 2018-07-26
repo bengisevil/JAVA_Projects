@@ -1,0 +1,429 @@
+package memman;
+
+/**
+ * This class represents a modified version of a regular
+ * doubly linked list with an inner node class, and sentinental
+ * head and tail nodes. It represents the free blocks in the memory pool.
+ * 
+ * @author Bengi Sevil
+ * @version 07/05/2018
+ *
+ */
+public class DLList {
+
+    private Node head;
+    private Node tail;
+    private int size;
+    private int initialSize;
+
+
+    /**
+     * Default constructor that creates a DLList object with
+     * a head node with position 0 and size 10;
+     * Calls init to initialize private fields.
+     * 
+     * @param initialSize
+     *            The initialSize of the first node.
+     */
+    public DLList(int initialSize) {
+        this.initialSize = initialSize;
+        init(initialSize);
+    }
+
+
+    /**
+     * Initializes private fields. Sets the previous
+     * and next fields for the head and tail, and
+     * initializes size to 0.
+     * 
+     * Head and tail are sentinental nodes that do not
+     * contain anything, but point to the first and last
+     * nodes if they exist.
+     */
+    private void init(int initialSize) {
+        head = new Node(0, initialSize);
+        tail = null;
+        head.setNext(tail);
+        size = 0;
+    }
+
+
+    /**
+     * Returns the current size of the doubly linked list.
+     * 
+     * @return
+     *         The current size.
+     */
+    public int getSize() {
+        return size;
+    }
+
+
+    /**
+     * Checks whether the list is empty.
+     * 
+     * @return {@code true} if the doubly linked list is empty.
+     *         {@code false} otherwise.
+     */
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+
+
+    /**
+     * Calls init to reset all private fields to their
+     * default values and empty the list.
+     */
+    public void clear() {
+        init(initialSize);
+    }
+
+
+    /**
+     * This method searches the DLList in a circular manner and returns
+     * the first node with a size field that is greater than or equal to the
+     * searchSize. If not found, returns -1.
+     * 
+     * @param searchSize
+     * @return position of the first fit free block or -1 if no free blocks
+     *         exist.
+     * @throw new IndexOutOfBoundsException if curPos is invalid.
+     */
+    public int getPositionByFirstFit(int curPos, int searchSize) {
+        for (Node ind = getNodeByPosition(curPos); ind != tail; ind = ind
+            .next()) {
+            if (ind.getSize() >= searchSize) {
+                return ind.getPos();
+            }
+        }
+        for (Node ind = head; ind != getNodeByPosition(curPos); ind = ind
+            .next()) {
+            if (ind.getSize() >= searchSize) {
+                if (ind.getSize() >= searchSize) {
+                    return ind.getPos();
+                }
+            }
+        }
+        return -1;
+    }
+
+
+    /**
+     * Adds a new node with position newPos and size newSize.
+     * Merges adjacent blocks as needed with helper methods.
+     * 
+     * @param newPos
+     *            position of the new free block.
+     * @param newSize
+     *            size of the new free block.
+     */
+    public void add(int newPos, int newSize) {
+        Node newNode = new Node(newPos, newSize);
+        if (isEmpty()) {
+            head = newNode;
+            size++;
+        }
+        else if (size == 1) {
+            head.setNext(newNode);
+            newNode.setPrevious(head);
+            newNode.setNext(tail);
+            size++;
+        }
+        else if (head.next()!= null &&(head.getPos() + head.getSize()) < newNode.getPos() && (newNode
+            .getPos() + newNode.getSize() < head.next().getPos())) {
+            head.next().setPrevious(newNode);
+            newNode.setNext(head.next());
+            head.setNext(newNode);
+            newNode.setPrevious(head);
+            size++;
+        }
+        else {
+            for (int i = 0; i < getSize(); i++) {
+                Node curr = getNode(i);
+                if (addNewBlock(curr, newNode)) {
+                    break;
+                }
+                curr = curr.next();
+            }
+        }
+    }
+
+
+    /**
+     * Helper method to the add method that ensures the new addition
+     * is in order with respect to ascending position, and merges blocks if
+     * needed.
+     * 
+     * @param curr
+     *            current node.
+     * @param newNode
+     *            new node to be added.
+     */
+    private boolean addNewBlock(Node curr, Node newNode) {
+        // Add to end
+        if (curr.next() == null) {
+            if ((curr.getPos() < newNode.getPos())) {
+                if (!areAdjacent(curr, newNode)) {
+                    curr.setNext(newNode);
+                    newNode.setNext(tail);
+                    newNode.setPrevious(curr);
+                    size++;
+                }
+                else {
+                    merge(curr, newNode);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        if ((curr.next().getPos() > newNode.getPos() && curr.getPos() < newNode
+            .getPos())) {
+            if (!areAdjacent(curr, newNode)) {
+                if (curr.previous() != null) {
+                    Node temp = curr.previous();
+                    curr.setPrevious(newNode);
+                    newNode.setNext(curr);
+                    newNode.setPrevious(temp);
+                    temp.setNext(newNode);
+                }
+                else {
+                    newNode.setPrevious(curr);
+                    newNode.setNext(curr.next());
+                    curr.setNext(newNode);
+                }
+                size++;
+            }
+            else {
+                merge(curr, newNode);
+                Node temp = head;
+                while (temp != null) {
+                    if (temp.next() == null) {
+                        break;
+                    }
+                    reMerge(temp, temp.next());
+                    temp = temp.next();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Checks if two blocks are adjacent or if the space between
+     * them are small enough to have the need to merge the two
+     * given blocks.
+     * 
+     * @param curr
+     *            Current free block.
+     * @param newNode
+     *            New free block to be added.
+     * @return
+     */
+    private boolean areAdjacent(Node curr, Node newNode) {
+        return ((curr.getPos() + curr.getSize()) >= newNode.getPos());
+    }
+
+
+    /**
+     * Merges curr and newNode in the proper order.
+     * 
+     * @param curr
+     *            current node.
+     * @param newNode
+     *            node that curr is merging with.
+     */
+    private void merge(Node curr, Node newNode) {
+        int blockSize = curr.getSize() + newNode.getSize();
+        if (curr.next() == null) {
+            blockSize = curr.getPos() + curr.getSize();
+            if ((curr.getSize() + curr.getPos()) >= (newNode.getPos() + newNode
+                .getSize())) {
+                setNode(curr.getPos(), blockSize);
+            }
+            else {
+                blockSize += Math.abs((newNode.getSize() + newNode.getPos())
+                    - blockSize);
+                setNode(curr.getPos(), blockSize);
+            }
+        }
+        else if (((curr.getPos() + curr.getSize()) >= newNode.getPos())
+            && (newNode.getPos() + newNode.getSize()) < curr.next().getPos()) {
+            setNode(curr.getPos(), blockSize);
+        }
+        else {
+            blockSize += Math.abs(curr.next().getSize() - blockSize);
+            // remove larger block for merging
+            curr = remove(curr.next().getPos(), curr.next().getSize());
+            setNode(curr.getPos(), blockSize);
+        }
+    }
+
+
+    /**
+     * Helper method to go over the list again after addition/deletion
+     * to ensure there is no more blocks to merge.
+     * 
+     * @param curr
+     * @param nextCurr
+     */
+    private void reMerge(Node curr, Node nextCurr) {
+        int blockSize = curr.getSize() + curr.getPos();
+        if (blockSize >= nextCurr.getPos()) {
+            // remove overlapping block for merging
+            curr = remove(nextCurr.getPos(), nextCurr.getSize());
+            setNode(curr.getPos(), blockSize);
+        }
+        else {
+            return;
+        }
+    }
+
+
+    /**
+     * Returns the node at the index value given.
+     * 
+     * @param index
+     *            The index of the node.
+     * @return
+     *         The node at the given index.
+     * 
+     * @throws IndexOutOfBoundsException
+     *             if the index is negative or greater than the size.
+     */
+    public Node getNode(int index) {
+        if (index < 0 || getSize() <= index) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+        Node curr = head;
+        for (int i = 0; i < index; i++) {
+            curr = curr.next();
+        }
+        return curr;
+    }
+
+
+    /**
+     * Returns the node containing the given position value. Returns null
+     * if not found.
+     * 
+     * @param pos
+     *            Position value being searched.
+     * @return
+     *         Node with pos position value.
+     */
+    public Node getNodeByPosition(int pos) {
+        for (Node curr = head; curr != tail; curr = curr.next()) {
+            if (curr.getPos() == pos) {
+                return curr;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * Finds the node which has the position field pos and
+     * updates its size field to size.
+     * 
+     * @param pos
+     *            Position field of the node being updated.
+     * @param size
+     *            New size for the node.
+     */
+    private void setNode(int pos, int size) {
+        Node temp = getNodeByPosition(pos);
+        temp.setSize(size);
+    }
+
+
+    /**
+     * Removes the node with position pos if the size is
+     * equivalent to the parameter size, or shrinks the size of the node, or
+     * splits up the current node based on need.
+     * 
+     * @param pos
+     *            The position of the node to be deleted.
+     * @param size
+     *            The size of the node to be deleted.
+     * @return deleted node.
+     * 
+     * @throws IllegalStateException
+     *             if the list is empty.
+     * 
+     */
+    public Node remove(int pos, int size) {
+        if (isEmpty()) {
+            throw new IllegalStateException("Illegal to call remove");
+        }
+        Node curr = getNodeByPosition(pos);
+        if (curr != null) {
+            // If removing the entire block
+            if (curr.getSize() == size) {
+                if (curr == head) {
+                    Node temp = curr;
+                    head = curr.next();
+                    return temp;
+                }
+                if (curr.next() != tail) {
+                    curr.next().setPrevious(curr.previous());
+                    curr.previous().setNext(curr.next());
+                }
+                else {
+                    curr.previous().setNext(null);
+                }
+                size--;
+                return curr.previous();
+            }
+            // If removing part of the block
+            else {
+                curr.setPos(curr.getPos() + size);
+                curr.setSize(curr.getSize() - size);
+                return curr;
+            }
+        }
+
+        // If pos does not exist in the current nodes.
+        for (Node ind = head; ind != null; ind = ind.next()) {
+            if ((ind.getPos() < pos) && ((ind.getPos() + ind
+                .getSize()) > pos)) {
+                ind.setSize(ind.getSize() - size);
+                return ind;
+            }
+        }
+        return null;
+
+    }
+
+
+    /**
+     * String representation of the linked list.
+     * Empty list: [{0,0}]
+     * Non-empty list: [{position, size}]
+     * Helper method for debugging.
+     * 
+     * @return the string representation of the linked list.
+     */
+    @SuppressWarnings("null")
+    public String toString() {
+        StringBuilder builder = new StringBuilder("[");
+
+        for (Node curr = head; curr != tail; curr = curr.next()) {
+            if (curr.next() == null) {
+                builder.append("{" + curr.getPos() + ", " + curr.getSize()
+                    + "}");
+
+            }
+            else {
+                builder.append("{" + curr.getPos() + ", " + curr.getSize() + "}"
+                    + ", ");
+            }
+        }
+
+        builder.append("]");
+        return builder.toString();
+    }
+
+}

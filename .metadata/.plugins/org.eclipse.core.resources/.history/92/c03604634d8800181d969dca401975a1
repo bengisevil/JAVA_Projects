@@ -1,0 +1,132 @@
+package memman;
+
+/**
+ * This class represents the memory pool in the Memory
+ * Manager project.
+ * 
+ * @author Bengi Sevil
+ * @version 07.12.2018
+ * @param <T>
+ *            Type template.
+ */
+public class MemoryPool<T> {
+    private Byte[] memPool;
+    private int size;
+    private int frontIndex;
+    private int backIndex;
+    private DLList freeBlockList;
+
+
+    /**
+     * Creates a new MemoryPool object with length initialSize + 1.
+     * 
+     * @param initialSize
+     *            Initial size of the memPool.
+     */
+    @SuppressWarnings("unchecked")
+    public MemoryPool(int initialSize) {
+        size = initialSize;
+        memPool = new Byte[initialSize + 1];
+        frontIndex = 0;
+        backIndex = size;
+        freeBlockList = new DLList(initialSize);
+    }
+
+
+    /**
+     * Checks if the memory pool by comparing front and back index.
+     * 
+     * @return {@code true} if memPool is full.
+     *         {@code false} otherwise.
+     */
+    public boolean isFull() {
+        return (frontIndex == ((backIndex + 2) % memPool.length));
+    }
+
+
+    /**
+     * Retrieves one or more blocks from the memPool based on the
+     * number stored and the index given. The number stored in index
+     * indicates how many blocks after the current index represents the
+     * desired data.
+     * Updates the freeBlockList.
+     * 
+     * @param index
+     *            The index of the item requested.
+     * @return Byte array representation of the item requested.
+     */
+    public Byte[] retrieve(int index) {
+        int numOfBlocksAfter = memPool[index];
+        Byte[] result = new Byte[numOfBlocksAfter];
+        for (int i = 1; i < numOfBlocksAfter; i++) {
+            result[i] = memPool[i];
+        }
+        // Update freeBlockList
+        freeBlockList.add(index, numOfBlocksAfter + 1);
+        return result;
+    }
+
+
+    /**
+     * This method stores the byte array representation of a new item in the
+     * memory pool.
+     * 
+     * @precondition the first index of item must indicate the number of blocks
+     *               the new item will occupy after the current block.
+     * @param item
+     *            New item to be inserted into the memory pool.
+     * @throws IllegalArgumentException
+     *             if item is of length 0.
+     */
+    public void insert(Byte[] item) {
+        if (item.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        
+        ensureCapacity();
+        for (int i = 0; i < item.length; i++) {
+            
+        }
+
+    }
+
+    public boolean firstFitSearch(int newSize) {
+        
+    }
+
+    /**
+     * Helper method that doubles the capacity of the circular byte
+     * array if needed.
+     */
+    private void ensureCapacity() {
+        // If array is full, double the capacity.
+        if (isFull()) {
+            Byte[] oldMemPool = memPool;
+            int oldSize = memPool.length;
+            Byte[] temp = new Byte[oldSize * 2 - 1];
+            memPool = temp;
+            for (int i = 0; i < oldSize - 1; i++) {
+                memPool[i] = oldMemPool[frontIndex];
+                frontIndex = (frontIndex + 1) % oldSize;
+            }
+            frontIndex = 0;
+            backIndex = oldSize - 2;
+            freeBlockList.add(oldSize, memPool.length - 1);
+        }
+    }
+
+
+    /**
+     * This is a helper method for the circularSearch method
+     * that increments the curIndex properly.
+     * 
+     * 
+     * @param index
+     *            The index to be incremented.
+     * @return the incremented index.
+     */
+    private int incrementIndex(int index) {
+        return ((index + 1) % memPool.length);
+    }
+
+}
